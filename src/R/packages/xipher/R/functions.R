@@ -1490,3 +1490,32 @@ update.excluded.cell.barcodes = function( cells.exclude, root.dir ) {
   
 }
 
+#' Test if string ends with given suffix
+#'
+#' @param theString string to be tested
+#' @param theExt suffix to be tested for
+#' @return TRUE if theString ends with theExt
+#' @export
+strEndsWith<-function(theString,theExt) {
+  return(substring(theString,1+nchar(theString)-nchar(theExt))==theExt)
+}
+
+#' Creates a file connection with the given open mode.
+#' @param file If ends with ".gz", a gzfile() is created; else a regular file() connection.
+#' @param open mode in which file is opened.  Default: "rb"
+#' @export
+open_conn = function(file, open="") {
+  if (strEndsWith(file, ".gz")) {
+    # work around bug in gzfile:
+    # https://stackoverflow.com/questions/45665496/how-would-one-readlines-from-a-gzip-file-in-r
+    if (nchar(open) == 0) {
+      open = "rb"
+    }
+    if (!strEndsWith(open, "b")) {
+      open=paste0(open, "b")
+    }
+    return(gzcon(file(file, open=open)))
+  } else {
+    return(file(file, open=open))
+  }
+}
