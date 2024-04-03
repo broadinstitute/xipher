@@ -1,3 +1,24 @@
+# MIT License
+#
+# Copyright 2024 Broad Institute
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in all
+# copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
 
 # general ---------------------------------------------------------------------------------------------------------
 
@@ -267,6 +288,21 @@ load.raw.dac = function( dac.directory ) {
   
 }
 
+#' Load one or more DACs, disambiguate the CBCs based on the file names, and merge them into a single data.table.
+#' @param files one or more files with extension .dac.txt.gz, produced by GatherDigitalAlleleCounts.  The colnames should be
+#' chr	pos	gene	cell	ref_base	alt_base	rA	rC	rG	rT	rN	A	C	G	T	N	num_umi	umi_mean_purity	read_pval	read_ratio	read_ci_low	read_ci_high	umi_pval	umi_ratio	umi_ci_low	umi_ci_high
+#' @import data.table
+load_and_merge_dacs<-function(files) {
+  replicate.names = do.call( "rbind", strsplit( basename(files), ".dac.txt.gz" ) )
+  dac = lapply( files, function( path ) { data.table::fread( path ) } )
+  dac = mapply( function( table, tag ) { table[ , cell := paste( tag, cell, sep = "_" ) ] }, 
+                table = dac, tag = replicate.names, SIMPLIFY = FALSE )
+  dac = data.table::rbindlist( dac )
+  col.keep = c( "chr", "pos", "gene", "cell", "A", "C", "G", "T", "N" )
+  dac = dac[ , col.keep, with = FALSE ]
+  data.table::setkey( dac, pos )
+  return(dac)
+}
 
 #'
 #'  
@@ -1518,4 +1554,19 @@ open_conn = function(file, open="") {
   } else {
     return(file(file, open=open))
   }
+}
+
+#' Helper function for writing a possibly gzipped data.table/data.frame
+#' @param outPath path to output file
+#' @param x data.table/data.frame to write
+#' @param col.names whether to write column names
+#' @param row.names whether to write row names
+#' @param quote whether to quote strings
+#' @param sep column separator
+#' @param ... additional arguments to write.table
+#' @import utils
+write_table_helper<-function(outPath, x, col.names=TRUE, row.names=FALSE, quote=FALSE, sep="\t", ...) {
+  outconn <- open_conn(outPath, "w")
+  utils::write.table(x, outconn, col.names=col.names, row.names=row.names, quote=quote, sep=sep)
+  close(outconn)
 }
