@@ -28,21 +28,23 @@
 #' @param gnomAdPath path to gnomAD vcf
 #' @export
 #' @import data.table, R.utils, utils
-prepareVcfClp <- function(outVcfPath, inVcfPath, isMouse=FALSE, gnomAdPath=NULL) {
+prepareVcfClp <- function(outVcfPath, inVcfPath, isMouse=FALSE, gnomAdPath=NULL,
+                          X_contig_name=default_X_contig_name) {
   vcf <- data.table::fread(inVcfPath )
   if ( !is.null(gnomAdPath) ) {
   gnomad.vcf = data.table::fread( gnomAdPath )
   } else {
     gnomad.vcf = NULL
   }
-  outVcf <- prepareVcf(vcf, gnomad.vcf, isMouse)
+  outVcf <- prepareVcf(vcf, gnomad.vcf, isMouse, X_contig_name=X_contig_name)
   write_table_helper(outVcfPath, outVcf)
 }
 
-prepareVcf<-function(vcf, gnomad.vcf = NULL, isMouse=FALSE) {
+prepareVcf<-function(vcf, gnomad.vcf = NULL, isMouse=FALSE,
+                     X_contig_name=default_X_contig_name) {
   
   vcf[ , CHROM := gsub( "chr", "", CHROM ) ]
-  vcf = vcf[ CHROM == "X" & TYPE == "SNP" ]
+  vcf = vcf[ CHROM == X_contig_name & TYPE == "SNP" ]
   vcf[ , c( "CHROM", "TYPE" ) := NULL ] 
   colnames( vcf ) = do.call( "rbind", strsplit( colnames( vcf ), ".", fixed = T ) )[ , 2 ]
   colnames( vcf ) = tolower( colnames( vcf ) )
@@ -68,7 +70,7 @@ prepareVcf<-function(vcf, gnomad.vcf = NULL, isMouse=FALSE) {
   if ( !is.null(gnomad.vcf) ) {
     
     gnomad.vcf[ , chrom := gsub( "chr", "", chrom ) ]
-    gnomad.vcf = gnomad.vcf[ chrom == "X" & type == "SNP" ]
+    gnomad.vcf = gnomad.vcf[ chrom == X_contig_name & type == "SNP" ]
     gnomad.vcf[ , c( "chrom", "type" ) := NULL ]
     colnames( gnomad.vcf )[ -1 ] = paste0( "gnomad.", colnames( gnomad.vcf )[ -1 ] )
     vcf <- merge( vcf, gnomad.vcf, by.x = c( "pos", "ref", "alt" ), by.y = c( "pos", "gnomad.ref", "gnomad.alt" ) )
