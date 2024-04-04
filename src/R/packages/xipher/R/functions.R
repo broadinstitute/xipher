@@ -85,12 +85,12 @@ get.corresponding.cell.names = function( cell.names.a, cell.names.b, overlap.thr
   
   # overlap threshold should be 10 ^ 5 for 10X V3 libraries, 10 ^ 4 for 10X V2, 10 ^ 3 for drop-seq
   
-  set.a = data.table( library.a = get.cell.barcode.prefix( cell.names.a ), cbc = get.cell.barcode.suffix( cell.names.a ) )
+  set.a = data.table::data.table( library.a = get.cell.barcode.prefix( cell.names.a ), cbc = get.cell.barcode.suffix( cell.names.a ) )
   set.a.table = set.a[ , table( library.a ) ]
   range( set.a.table )
   if ( any( set.a.table < 1000 ) ) { message( "WARNING: libraries with fewer than 1000 cells present in set.a" ) }
   
-  set.b = data.table( library.b = get.cell.barcode.prefix( cell.names.b ), cbc = get.cell.barcode.suffix( cell.names.b ) )
+  set.b = data.table::data.table( library.b = get.cell.barcode.prefix( cell.names.b ), cbc = get.cell.barcode.suffix( cell.names.b ) )
   set.b.table = set.b[ , table( library.b ) ]
   range( set.b.table )
   if ( any( set.b.table < 1000 ) ) { message( "WARNING: libraries with fewer than 1000 cells present in set.b" ) }
@@ -284,7 +284,7 @@ load.raw.dac = function( dac.directory ) {
   # EDIT - include read columns ( i.e. rA ... rN ) too?
   col.keep = c( "chr", "pos", "gene", "cell", "A", "C", "G", "T", "N" )
   dac = dac[ , col.keep, with = FALSE ]
-  setkey( dac, pos )
+  data.table::setkey( dac, pos )
   
 }
 
@@ -328,13 +328,13 @@ phase.x.variants = function( unphased.dac, gen.unit.use = "pos", xi.genes = NULL
   first.start = Sys.time()
   current.time = Sys.time()
   
-  copy.unphased.dac = copy( unphased.dac )
+  copy.unphased.dac = data.table::copy( unphased.dac )
   # copy.unphased.dac = copy( dac )
   copy.unphased.dac[ chr == "X" ]
   
   colnames( copy.unphased.dac ) = gsub( gen.unit.use, "gen.unit", colnames( copy.unphased.dac ) )
   gen.units = copy.unphased.dac[ , sort( unique( gen.unit ) ) ]
-  flip.record = data.table( gen.unit = gen.units, flip = FALSE, contains = as.character( gen.units ), touched = FALSE )
+  flip.record = data.table::data.table( gen.unit = gen.units, flip = FALSE, contains = as.character( gen.units ), touched = FALSE )
   
   # flip xi.genes and remove unwanted genes
   copy.unphased.dac[ gene %in% xi.genes, `:=`( H1 = H2, H2 = H1 ) ]
@@ -384,7 +384,7 @@ phase.x.variants = function( unphased.dac, gen.unit.use = "pos", xi.genes = NULL
   # split cell.by.gen.unit into list of data.tables by gen.unit and active.x    
   cell.by.gen.unit[ H1 > H2, active.x := "H1" ]
   cell.by.gen.unit[ H1 < H2, active.x := "H2" ]
-  setkey( cell.by.gen.unit, cell, gen.unit, active.x )
+  data.table::setkey( cell.by.gen.unit, cell, gen.unit, active.x )
   list.by.gen.unit = split( cell.by.gen.unit, by = "gen.unit" )
   list.by.gen.unit.and.active.x = lapply( list.by.gen.unit, function( x ) { split( x, by = "active.x" ) } )
   
@@ -466,7 +466,7 @@ phase.x.variants = function( unphased.dac, gen.unit.use = "pos", xi.genes = NULL
     cell.by.gen.unit.subset = cell.by.gen.unit[ gen.unit == gen.unit.pair.use[ 1 ] ]
     cell.by.gen.unit.subset[ H1 > H2, active.x := "H1" ]
     cell.by.gen.unit.subset[ H1 < H2, active.x := "H2" ]
-    setkey( cell.by.gen.unit.subset, cell, gen.unit, active.x )
+    data.table::setkey( cell.by.gen.unit.subset, cell, gen.unit, active.x )
     list.by.gen.unit[[ P1 ]] = cell.by.gen.unit.subset
     list.by.gen.unit[[ P2 ]] = NULL
     list.by.gen.unit.and.active.x[[ P1 ]] = split( cell.by.gen.unit.subset, by = "active.x" )
@@ -559,7 +559,7 @@ generate.error.rates.and.update.phasing = function( dac, phased.positions, flip.
                                                     likelihood.min = 0.8, position.uncertainties = NULL,
                                                     flip.xist = FALSE ) {
   
-  dac.copy = copy( dac )
+  dac.copy = data.table::copy( dac )
   dac.copy$total = NULL
   dac.copy[ , total := H1 + H2 ]
   dac.copy = dac.copy[ total > 0 ]
@@ -577,14 +577,14 @@ generate.error.rates.and.update.phasing = function( dac, phased.positions, flip.
   message( "using ", n.pos, " positions ( ", round( n.pos / length( unique( dac.copy$pos ) ), 2 ), " )" )
   
   
-  position.stats = data.table()
+  position.stats = data.table::data.table()
   
   # progress.bar = txtProgressBar( min = 0, max = length( positions.use ), initial = 0, style = 3 )
   # i = 1
   
   for ( position.use in positions.use ) {
     
-    position.dac = copy( dac.copy )
+    position.dac = data.table::copy( dac.copy )
     position.dac = position.dac[ pos == position.use ]
     position.dac = position.dac[ , .( pos, ref, alt, gene, cell, A1 = H1, A2 = H2 ) ]
     
@@ -592,7 +592,7 @@ generate.error.rates.and.update.phasing = function( dac, phased.positions, flip.
     alt = position.dac[ 1, alt ]
     gene = position.dac[ 1, gene ]
     
-    dac.subset = copy( dac.copy )
+    dac.subset = data.table::copy( dac.copy )
     dac.subset = dac.subset[ pos != position.use ]
     
     x.calls = call.active.x( dac.subset, phased.positions, flip.positions, position.uncertainties = position.uncertainties, 
@@ -639,7 +639,7 @@ generate.error.rates.and.update.phasing = function( dac, phased.positions, flip.
     } else { previously.flip = NA }
     
     
-    new.row = data.table( pos = position.use, ref, alt, gene, 
+    new.row = data.table::data.table( pos = position.use, ref, alt, gene, 
                           previously.phased, previously.flip,
                           n.cells, 
                           mis, match, total, error.rate )
@@ -678,7 +678,7 @@ call.active.x = function( dac, phased.positions, flip.positions, position.uncert
   
   # using likelihood and weighted.purity for x calls when available ( i.e. when position.uncertainties known )
   
-  dac.copy = copy( dac )
+  dac.copy = data.table::copy( dac )
   colnames( dac.copy ) = gsub( "H1", "X1", colnames( dac.copy ), fixed = TRUE )
   colnames( dac.copy ) = gsub( "H2", "X2", colnames( dac.copy ), fixed = TRUE )
   
@@ -789,7 +789,7 @@ get.corrected.skew.correlations = function( skew.matrix, total.matrix, cor.metho
 #'
 process.seurat.diff.exp.output = function( diff.exp, chr.table ) {
   
-  diff.exp = as.data.table( diff.exp, keep.rownames = "gene" )
+  diff.exp = data.table::as.data.table( diff.exp, keep.rownames = "gene" )
   diff.exp = merge( diff.exp, chr.table[ , .( chr, gene ) ], by = "gene", all.x = TRUE )
   colnames( diff.exp ) = c( "gene", "p.value", "log.2.fc", "pct.1", "pct.2", "p.value.adj", "chr" )
   setorderv( diff.exp, c( "p.value" ) )
@@ -808,7 +808,7 @@ process.seurat.diff.exp.output = function( diff.exp, chr.table ) {
 #'
 equalize.x.proportions.by.cluster = function( input.table, plot = TRUE ) {
   
-  by.cluster = copy( input.table )
+  by.cluster = data.table::copy( input.table )
   by.cluster[ active.x == "X1", X1.cells := 1 ]
   by.cluster[ active.x == "X2", X2.cells := 1 ]
   by.cluster = by.cluster[ , lapply( .SD, sum, na.rm = TRUE ), by = .( cluster ), .SDcols = ( X1.cells:X2.cells ) ]
@@ -826,7 +826,7 @@ equalize.x.proportions.by.cluster = function( input.table, plot = TRUE ) {
   target.proportion = by.cluster[ , sum( X1.cells ) / sum( x.total ) ]
   message( "target proportion is ", round( target.proportion, 3 ) )
   
-  equalized.table = copy( input.table )
+  equalized.table = data.table::copy( input.table )
   equalized.table$remove = FALSE
   for ( i in 1:nrow( by.cluster ) ) {
     
@@ -859,7 +859,7 @@ equalize.x.proportions.by.cluster = function( input.table, plot = TRUE ) {
   
   if ( plot ) {
     
-    by.cluster.equalized = copy( equalized.table )
+    by.cluster.equalized = data.table::copy( equalized.table )
     by.cluster.equalized[ active.x == "X1", X1.cells := 1 ]
     by.cluster.equalized[ active.x == "X2", X2.cells := 1 ]
     by.cluster.equalized = by.cluster.equalized[ , lapply( .SD, sum, na.rm = TRUE ), by = .( cluster ), .SDcols = ( X1.cells:X2.cells ) ]
@@ -895,7 +895,7 @@ equalize.x.proportions.by.cluster = function( input.table, plot = TRUE ) {
 #'
 process.seurat.diff.exp.output = function( diff.exp, chr.table ) {
   
-  diff.exp = as.data.table( diff.exp, keep.rownames = "gene" )
+  diff.exp = data.table::as.data.table( diff.exp, keep.rownames = "gene" )
   diff.exp = merge( diff.exp, chr.table[ , .( chr, gene ) ], by = "gene", all.x = TRUE )
   colnames( diff.exp ) = c( "gene", "p.value", "log.2.fc", "pct.1", "pct.2", "p.value.adj", "chr" )
   setorderv( diff.exp, c( "p.value" ) )
@@ -914,10 +914,10 @@ process.seurat.diff.exp.output = function( diff.exp, chr.table ) {
 #'
 liftover.x.positions = function( positions.to.liftover, chain.object ) {
   
-  pos.dt = data.table( pos = positions.to.liftover, group = 1:length( positions.to.liftover ) )
+  pos.dt = data.table::data.table( pos = positions.to.liftover, group = 1:length( positions.to.liftover ) )
   
   granges.object = pos.dt[ , GRanges( seqnames = "chrX", ranges = IRanges( start = pos, end = pos ) ) ]
-  liftover.results = as.data.table( liftOver( granges.object, chain.object ) )
+  liftover.results = data.table::as.data.table( liftOver( granges.object, chain.object ) )
   pos.dt = merge( pos.dt, liftover.results[ , .( group, new.pos = start ) ], all.x = TRUE, by = "group" )
   pos.dt$group = NULL
   failed.liftover = pos.dt[ is.na( new.pos ), pos ]
@@ -946,7 +946,7 @@ get.library.paths.and.metadata = function() {
     
     message( "copy my.name, cell.features, and sparse.dge columns ( press enter when ready )" )
     readline()
-    library.paths.and.metadata = as.data.table( read.table( "clipboard", header = TRUE, colClasses = "character" ) )
+    library.paths.and.metadata = data.table::as.data.table( read.table( "clipboard", header = TRUE, colClasses = "character" ) )
     write.table( library.paths.and.metadata, "library_paths_and_metadata.txt", row.names = FALSE, quote = FALSE )
     message( "wrote new library_paths_and_metadata.txt" )
     
@@ -1079,7 +1079,7 @@ update.cell.feature.columns = function( cell.features, dge ) {
   cell.features = cell.features[ cell %in% colnames( dge ) ]
   
   binary.dge = dge > 0
-  n.genes.dt = data.table( cell = colnames( binary.dge ), num.genes = colSums( binary.dge ) )
+  n.genes.dt = data.table::data.table( cell = colnames( binary.dge ), num.genes = colSums( binary.dge ) )
   cell.features = merge( cell.features, n.genes.dt, by = "cell" )
   cell.features[ , genes.per.transcript := num.genes / num.transcripts ]
   setorderv( cell.features, "num.transcripts", order = -1 )
@@ -1094,7 +1094,7 @@ load.cell.features = function( cell.feature.paths, names.use, dge, subset.paths 
   cell.feature.paths = unique( cell.feature.paths )
   
   message( "loading cell features" )
-  cell.features = data.table()
+  cell.features = data.table::data.table()
   
   for ( i in 1:length( cell.feature.paths ) ) {
     
@@ -1145,7 +1145,7 @@ load.cell.features = function( cell.feature.paths, names.use, dge, subset.paths 
       
     }
     
-    cell.features.new = as.data.table( cell.features.new )
+    cell.features.new = data.table::as.data.table( cell.features.new )
     colnames( cell.features.new ) = gsub( "_", ".", colnames( cell.features.new ), fixed = TRUE )
     colnames( cell.features.new ) = gsub( "cell.barcode", "cbc", colnames( cell.features.new ), fixed = TRUE )
     cell.features.new = cell.features.new[ , cbc:pct.mt ]
@@ -1166,7 +1166,7 @@ load.cell.features = function( cell.feature.paths, names.use, dge, subset.paths 
   cell.features[ , efficiency := num.transcripts / num.reads ]
   
   binary.dge = dge > 0
-  n.genes.dt = data.table( cell = colnames( binary.dge ), num.genes = colSums( binary.dge ) )
+  n.genes.dt = data.table::data.table( cell = colnames( binary.dge ), num.genes = colSums( binary.dge ) )
   
   rep.table.a = cell.features[ , table( replicate ) ]
   cell.features = merge( cell.features, n.genes.dt, by = "cell" )
@@ -1247,7 +1247,7 @@ load.cell.features.plot.and.save = function( cell.feature.paths, names.use, dge,
 #'
 create.cell.metadata.table = function( seurat ) {
   
-  cell.metadata = data.table( cell = colnames( seurat@assays$RNA@counts ) )
+  cell.metadata = data.table::data.table( cell = colnames( seurat@assays$RNA@counts ) )
   cell.metadata[ , random := sample( .N ) ]
   cell.metadata[ , replicate := factor( get.cell.barcode.prefix( cell ) ) ]
   
@@ -1263,7 +1263,7 @@ create.2D.embeddings = function( seurat, cell.metadata, pcs.use, reduction.use =
   if ( length( cell.metadata$umap.x ) > 0 ) { cell.metadata$umap.x = NULL; cell.metadata$umap.y = NULL }
   
   seurat = RunUMAP( seurat, dims = pcs.use, reduction = reduction.use, verbose = FALSE )
-  umap.dt = as.data.table( seurat@reductions$umap@cell.embeddings, keep.rownames = "cell" )
+  umap.dt = data.table::as.data.table( seurat@reductions$umap@cell.embeddings, keep.rownames = "cell" )
   colnames( umap.dt )[ 2:3 ] = c( "umap.x", "umap.y" )
   cell.metadata = merge( cell.metadata, umap.dt, by = "cell", all.x = TRUE )
   
@@ -1349,7 +1349,7 @@ annotate.cells.using.scpred.model = function( cell.metadata, dge, model.path, se
   n.models = ncol( scpred.data ) - 3
   next.best = apply( scpred.data[ , 1:n.models ], 1, function( x ) { sort( x, partial = n.models - 1 )[ n.models - 1 ] } )
   
-  new.table = data.table( cell = row.names( scpred.data ), scpred.call = scpred.data$scpred_prediction, 
+  new.table = data.table::data.table( cell = row.names( scpred.data ), scpred.call = scpred.data$scpred_prediction, 
                           best.model = scpred.data$scpred_no_rejection,
                           max.score = scpred.data$scpred_max, next.best.score = next.best )
   
