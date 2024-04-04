@@ -27,7 +27,7 @@
 #' @param isMouse logical, is the input vcf from a mouse?
 #' @param gnomAdPath path to gnomAD vcf
 #' @export
-#' @import data.table, R.utils, utils
+#' @import data.table
 prepareVcfClp <- function(outVcfPath, inVcfPath, isMouse=FALSE, gnomAdPath=NULL,
                           X_contig_name=default_X_contig_name) {
   vcf <- data.table::fread(inVcfPath )
