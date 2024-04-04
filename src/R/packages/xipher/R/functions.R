@@ -50,9 +50,9 @@ get.cell.barcode.suffix = function( cell.name ) {
 
 #'
 #'
-pivot.wider = function( data.table, rows.from, cols.from, values.from ) {
+pivot.wider = function( data_table, rows.from, cols.from, values.from ) {
   
-  out = pivot_wider( data.table, id_cols = rows.from, names_from = all_of( cols.from ), values_from = values.from )
+  out = pivot_wider( data_table, id_cols = rows.from, names_from = all_of( cols.from ), values_from = values.from )
   
   row.names = out[[ 1 ]]
   out[[ 1 ]] = NULL
@@ -80,7 +80,7 @@ get.corresponding.labels = function( labels, from, to ) {
 
 
 #'
-#'
+#' @import data.table
 get.corresponding.cell.names = function( cell.names.a, cell.names.b, overlap.threshold = 10 ^ 5, plot = TRUE ) {
   
   # overlap threshold should be 10 ^ 5 for 10X V3 libraries, 10 ^ 4 for 10X V2, 10 ^ 3 for drop-seq
@@ -269,11 +269,10 @@ create.loading.colors = function( data, center.col = "white", neg.col = "blue", 
 # x analyses ------------------------------------------------------------------------------------------------------
 
 #'
-#'
+#' @import data.table
 load.raw.dac = function( dac.directory ) {
   
-  library( data.table )
-  
+
   files = dir( dac.directory, pattern = ".dac.txt.gz" )
   replicate.names = do.call( "rbind", strsplit( files, ".dac.txt.gz" ) )
   dac = lapply( paste0( dac.directory, "/", files ), 
@@ -320,7 +319,7 @@ assign.bases.to.haplotypes = function( row, gt.col = "gt" ) {
 
 
 #'
-#'
+#' @import data.table, stringr
 phase.x.variants = function( unphased.dac, gen.unit.use = "pos", xi.genes = NULL, genes.exclude = NULL, 
                              cells.exclude = NULL, min.cells = 10, max.xi.proportion = 0.2, time.limit = 48,
                              max.gen.units = 1000,
@@ -530,7 +529,7 @@ phase.x.variants = function( unphased.dac, gen.unit.use = "pos", xi.genes = NULL
 
 
 #'
-#'
+#' @import binom
 get.pair.concordance = function( pair, list.a, list.b, min.cells, max.xi.proportion ) {
   
   pair = as.character( pair )
@@ -553,7 +552,7 @@ get.pair.concordance = function( pair, list.a, list.b, min.cells, max.xi.proport
 
 
 #'
-#'
+#' @import data.table
 generate.error.rates.and.update.phasing = function( dac, phased.positions, flip.positions, 
                                                     min.cells = 1, min.umi = 1, 
                                                     calling.count.min = 1, calling.purity.min = 0.8, 
@@ -672,7 +671,7 @@ generate.error.rates.and.update.phasing = function( dac, phased.positions, flip.
 
 
 #'
-#'
+#' @import data.table
 call.active.x = function( dac, phased.positions, flip.positions, position.uncertainties = NULL, 
                           calling.count.min = 1, calling.purity.min = 0.8, likelihood.min = 0.8,
                           flip.xist = FALSE, verbose = TRUE ) {
@@ -787,7 +786,7 @@ get.corrected.skew.correlations = function( skew.matrix, total.matrix, cor.metho
 
 
 #'
-#'
+#' @import data.table
 process.seurat.diff.exp.output = function( diff.exp, chr.table ) {
   
   diff.exp = data.table::as.data.table( diff.exp, keep.rownames = "gene" )
@@ -806,7 +805,7 @@ process.seurat.diff.exp.output = function( diff.exp, chr.table ) {
 
 
 #'
-#'
+#' @import data.table
 equalize.x.proportions.by.cluster = function( input.table, plot = TRUE ) {
   
   by.cluster = data.table::copy( input.table )
@@ -893,7 +892,7 @@ equalize.x.proportions.by.cluster = function( input.table, plot = TRUE ) {
 
 
 #'
-#'
+#' @import data.table
 process.seurat.diff.exp.output = function( diff.exp, chr.table ) {
   
   diff.exp = data.table::as.data.table( diff.exp, keep.rownames = "gene" )
@@ -912,7 +911,7 @@ process.seurat.diff.exp.output = function( diff.exp, chr.table ) {
 
 
 #'
-#'
+#' @import data.table
 liftover.x.positions = function( positions.to.liftover, chain.object ) {
   
   pos.dt = data.table::data.table( pos = positions.to.liftover, group = 1:length( positions.to.liftover ) )
@@ -935,7 +934,7 @@ liftover.x.positions = function( positions.to.liftover, chain.object ) {
 # clustering ------------------------------------------------------------------------------------------------------
 
 #'
-#'
+#' @import data.table
 get.library.paths.and.metadata = function() {
   
   if( file.exists( "library_paths_and_metadata.txt" ) ) {
@@ -1060,7 +1059,7 @@ create.seurat.for.global.clustering = function( library.paths.and.metadata, clus
 
 
 #'
-#'
+#' @import data.table
 update.cell.feature.columns = function( cell.features, dge ) {
   
   # EDIT: only used in generate_dges_and_cell_features.R as part of the cerebro pipeline ( just copy this code to script? )
@@ -1089,7 +1088,7 @@ update.cell.feature.columns = function( cell.features, dge ) {
 
 
 #'
-#'
+#' @import data.table
 load.cell.features = function( cell.feature.paths, names.use, dge, subset.paths = TRUE ) {
   
   cell.feature.paths = unique( cell.feature.paths )
@@ -1245,7 +1244,7 @@ load.cell.features.plot.and.save = function( cell.feature.paths, names.use, dge,
 
 
 #'
-#'
+#' @import data.table
 create.cell.metadata.table = function( seurat ) {
   
   cell.metadata = data.table::data.table( cell = colnames( seurat@assays$RNA@counts ) )
@@ -1258,7 +1257,7 @@ create.cell.metadata.table = function( seurat ) {
 
 
 #'
-#'
+#' @import data.table
 create.2D.embeddings = function( seurat, cell.metadata, pcs.use, reduction.use = "pca" ) {
   
   if ( length( cell.metadata$umap.x ) > 0 ) { cell.metadata$umap.x = NULL; cell.metadata$umap.y = NULL }
@@ -1335,7 +1334,7 @@ plot.cell.features = function( cell.features, cell.metadata ) {
 
 
 #'
-#'
+#' @import data.table
 annotate.cells.using.scpred.model = function( cell.metadata, dge, model.path, selection.threshold = 0.95, use.name = "", 
                                               plot = TRUE ) {
   
