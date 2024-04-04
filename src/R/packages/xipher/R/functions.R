@@ -323,14 +323,15 @@ assign.bases.to.haplotypes = function( row, gt.col = "gt" ) {
 #'
 phase.x.variants = function( unphased.dac, gen.unit.use = "pos", xi.genes = NULL, genes.exclude = NULL, 
                              cells.exclude = NULL, min.cells = 10, max.xi.proportion = 0.2, time.limit = 48,
-                             max.gen.units = 1000 ) {
+                             max.gen.units = 1000,
+                             X_contig_name=default_X_contig_name ) {
   
   first.start = Sys.time()
   current.time = Sys.time()
   
   copy.unphased.dac = data.table::copy( unphased.dac )
   # copy.unphased.dac = copy( dac )
-  copy.unphased.dac[ chr == "X" ]
+  copy.unphased.dac[ chr == X_contig_name ]
   
   colnames( copy.unphased.dac ) = gsub( gen.unit.use, "gen.unit", colnames( copy.unphased.dac ) )
   gen.units = copy.unphased.dac[ , sort( unique( gen.unit ) ) ]
@@ -1570,3 +1571,5 @@ write_table_helper<-function(outPath, x, col.names=TRUE, row.names=FALSE, quote=
   utils::write.table(x, outconn, col.names=col.names, row.names=row.names, quote=quote, sep=sep)
   close(outconn)
 }
+
+default_X_contig_name <- "X"
