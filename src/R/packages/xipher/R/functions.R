@@ -319,7 +319,7 @@ assign.bases.to.haplotypes = function( row, gt.col = "gt" ) {
 
 
 #'
-#' @import data.table, stringr
+#' @import data.table stringr
 phase.x.variants = function( unphased.dac, gen.unit.use = "pos", xi.genes = NULL, genes.exclude = NULL, 
                              cells.exclude = NULL, min.cells = 10, max.xi.proportion = 0.2, time.limit = 48,
                              max.gen.units = 1000,
