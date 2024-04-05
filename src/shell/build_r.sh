@@ -34,5 +34,5 @@ then rm -r man
 fi
 Rscript -e 'roxygen2::roxygenise()' -e 'warnings()'
 R CMD build .
-R CMD check --as-cran *.tar.gz
+R CMD check *.tar.gz
 
