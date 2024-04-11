@@ -37,6 +37,9 @@ callActiveXClp <- function(outErrorRatePath,
                      min.cells.final=4,
                      calling.purity.min=0.85,
                      likelihood.min=0.9) {
+  # Silence R CMD check warnings for data.table column references
+  pct.total = contains = pos = flip = error.rate = total = . = gene = uncertainty = NULL
+
   dac <- data.table::fread(preparedDacPath)
   flip.record <- data.table::fread(phasePath)
 

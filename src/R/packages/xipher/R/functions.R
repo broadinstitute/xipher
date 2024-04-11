@@ -76,6 +76,9 @@ get.corresponding.labels = function( labels, from, to ) {
 #' chr	pos	gene	cell	ref_base	alt_base	rA	rC	rG	rT	rN	A	C	G	T	N	num_umi	umi_mean_purity	read_pval	read_ratio	read_ci_low	read_ci_high	umi_pval	umi_ratio	umi_ci_low	umi_ci_high
 #' @import data.table
 load_and_merge_dacs<-function(files) {
+  # Silence R CMD check warnings for data.table column references
+  cell = pos = NULL
+
   replicate.names = do.call( "rbind", strsplit( basename(files), ".dac.txt.gz" ) )
   dac = lapply( files, function( path ) { data.table::fread( path ) } )
   dac = mapply( function( table, tag ) { table[ , cell := paste( tag, cell, sep = "_" ) ] }, 
@@ -108,7 +111,10 @@ phase.x.variants = function( unphased.dac, gen.unit.use = "pos", xi.genes = NULL
                              cells.exclude = NULL, min.cells = 10, max.xi.proportion = 0.2, time.limit = 48,
                              max.gen.units = 1000,
                              X_contig_name=default_X_contig_name ) {
-  
+
+  # Silence R CMD check warnings for data.table column references
+  chr = gen.unit = gene = . = cell = n.gen.unit = n.cell = active.x = contains = flip = touched = total = pct.total = num.gen.units = total.observations = NULL
+
   first.start = Sys.time()
   current.time = Sys.time()
   
@@ -342,7 +348,10 @@ generate.error.rates.and.update.phasing = function( dac, phased.positions, flip.
                                                     calling.count.min = 1, calling.purity.min = 0.8, 
                                                     likelihood.min = 0.8, position.uncertainties = NULL,
                                                     flip.xist = FALSE ) {
-  
+
+  # Silence R CMD check warnings for data.table column references
+  H1 = H2 = cells = pos = cell = active.x = A1 = A2 = min.uncertainty = uncertainty = cell = . = NULL
+
   dac.copy = data.table::copy( dac )
   dac.copy$total = NULL
   dac.copy[ , total := H1 + H2 ]
@@ -459,7 +468,10 @@ generate.error.rates.and.update.phasing = function( dac, phased.positions, flip.
 call.active.x = function( dac, phased.positions, flip.positions, position.uncertainties = NULL, 
                           calling.count.min = 1, calling.purity.min = 0.8, likelihood.min = 0.8,
                           flip.xist = FALSE, verbose = TRUE ) {
-  
+
+  # Silence R CMD check warnings for data.table column references
+  gene <- . <- X2 <- X1 <- pos <- cell <- total <- purity <- active.x <- uncertainty <- X1.weighted <- X2.weighted <- X1.probability <- X2.probability <- X1.likelihood <- purity.weighted <- NULL
+
   # using likelihood and weighted.purity for x calls when available ( i.e. when position.uncertainties known )
   
   dac.copy = data.table::copy( dac )

@@ -42,7 +42,9 @@ prepareVcfClp <- function(outVcfPath, inVcfPath, isMouse=FALSE, gnomAdPath=NULL,
 
 prepareVcf<-function(vcf, gnomad.vcf = NULL, isMouse=FALSE,
                      X_contig_name=default_X_contig_name) {
-  
+  # Silence R CMD check warnings for data.table column references
+  CHROM = TYPE = gt = ref = alt = het = chrom = type = NULL
+
   vcf[ , CHROM := gsub( "chr", "", CHROM ) ]
   vcf = vcf[ CHROM == X_contig_name & TYPE == "SNP" ]
   vcf[ , c( "CHROM", "TYPE" ) := NULL ] 
