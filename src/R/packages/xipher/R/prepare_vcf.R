@@ -26,6 +26,7 @@
 #' @param inVcfPath path to input vcf
 #' @param isMouse logical, is the input vcf from a mouse?
 #' @param gnomAdPath path to gnomAD vcf
+#' @param X_contig_name name of the X contig in the reference genome
 #' @export
 #' @import data.table
 prepareVcfClp <- function(outVcfPath, inVcfPath, isMouse=FALSE, gnomAdPath=NULL,
