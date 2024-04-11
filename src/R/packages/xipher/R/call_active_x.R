@@ -60,7 +60,7 @@ callActiveXClp <- function(outErrorRatePath,
   # saveRDS( x.calls, "x_calls_initial.RDS" )
   
   
-  position.stats = generate.error.rates.and.update.phasing( dac, phased.positions, flip.positions, min.cell = min.cells.final )
+  position.stats = generate.error.rates.and.update.phasing( dac, phased.positions, flip.positions, min.cells = min.cells.final )
   
   phased.positions = position.stats[ ( ( error.rate <= max.error.rate ) | ( error.rate >= ( 1 - max.error.rate ) ) ) & total >= min.cells.final, pos ]
   message( length( phased.positions ), " phased postions" )
