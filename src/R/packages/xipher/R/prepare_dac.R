@@ -35,6 +35,9 @@ prepareDacClp <- function(outDacPath,
                      vcfPath, 
                      intronicOnly=TRUE,
                      X_contig_name=default_X_contig_name) {
+  # Silence R CMD check warnings for data.table column references
+  chr = . = pos = gene = start = end = NULL
+
   dac <- load_and_merge_dacs(dacPaths)
   vcf <- data.table::fread( vcfPath )
   gtf <- data.table::fread( annotationsPath )
