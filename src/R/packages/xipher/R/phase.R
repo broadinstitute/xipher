@@ -23,6 +23,7 @@
 #' phase x chromosome SNPs
 #' @param outPhasePath path to write x SNP phase table
 #' @param preparedDacPath file produced by prepareDacClp()
+#' @param X_contig_name name of the X contig in the reference genome
 #' 
 #' TODO: Steve: document the rest of the parameters
 #' @export 

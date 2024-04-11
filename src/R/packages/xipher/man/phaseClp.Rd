@@ -16,7 +16,9 @@ phaseClp(
 \arguments{
 \item{outPhasePath}{path to write x SNP phase table}
 
-\item{preparedDacPath}{file produced by prepareDacClp()
+\item{preparedDacPath}{file produced by prepareDacClp()}
+
+\item{X_contig_name}{name of the X contig in the reference genome
 
 TODO: Steve: document the rest of the parameters}
 }

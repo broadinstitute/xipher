@@ -20,6 +20,8 @@ prepareVcfClp(
 \item{isMouse}{logical, is the input vcf from a mouse?}
 
 \item{gnomAdPath}{path to gnomAD vcf}
+
+\item{X_contig_name}{name of the X contig in the reference genome}
 }
 \description{
 load donor vcf, prepare for x inference, including gnomAD filtering if provided.
