@@ -10,9 +10,9 @@ name: xipher R package
 
 on:
   push:
-    branches: [ "master" ]
+    branches: [ "main" ]
   pull_request:
-    branches: [ "master" ]
+    branches: [ "main" ]
     paths: 'src/R/packages/xipher/**'
 
 permissions:
