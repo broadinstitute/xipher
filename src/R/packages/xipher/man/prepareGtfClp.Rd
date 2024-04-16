@@ -13,7 +13,9 @@ prepareGtfClp(
 \arguments{
 \item{outAnnotationsPath}{path to write gene annotations in format used by prepareDacClp()}
 
-\item{inReducedGtfPath}{path to reduced GTF file produced by ReduceGtf (see https://github.com/broadinstitute/Drop-seq/)}
+\item{inReducedGtfPath}{path to reduced GTF file produced by ReduceGtf (see https://github.com/broadinstitute/Drop-seq/).
+Note that you can speed ReduceGtf and make it's output smaller by providing a sequence dictionary
+that contains only the X contig.}
 
 \item{X_contig_name}{name of the X contig}
 }
