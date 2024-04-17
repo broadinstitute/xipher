@@ -6,7 +6,8 @@
 #' @param X_contig_name name of the X contig
 #' @export
 #' @import data.table
-prepareGtfClp<-function(outAnnotationsPath, 
+#' @seealso [xipher::default_X_contig_name]
+prepareGtfClp<-function(outAnnotationsPath,
                         inReducedGtfPath,
                         X_contig_name=default_X_contig_name) {
   gtf = data.table::fread( inReducedGtfPath )

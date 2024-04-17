@@ -25,3 +25,6 @@ TODO: Steve: document the rest of the parameters}
 \description{
 phase x chromosome SNPs
 }
+\seealso{
+[xipher::default_X_contig_name]
+}

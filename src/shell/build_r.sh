@@ -26,6 +26,37 @@
 
 set -e
 
+PROGNAME=`basename $0`
+function usage () {
+    cat >&2 <<EOF
+$*
+
+USAGE: $progname [-f]
+
+Roxygenize, build and check package in current directory.
+
+Options:
+
+-f: Fast: Don't R CMD check
+EOF
+}
+
+
+fast=0
+while getopts ":f" options; do
+  case $options in
+    f ) fast=1;;
+    h ) usage;;
+    \? ) usage
+         exit 1;;
+    * ) usage
+          exit 1;;
+
+  esac
+done
+shift $(($OPTIND - 1))
+
+
 if [ -f NAMESPACE ]
 then rm NAMESPACE
 fi
@@ -34,5 +65,9 @@ then rm -r man
 fi
 Rscript -e 'roxygen2::roxygenise()' -e 'warnings()'
 R CMD build .
-R CMD check *.tar.gz
+
+if (( $fast != 1 ))
+then R CMD check *.tar.gz
+fi
+
 

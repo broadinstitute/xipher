@@ -22,3 +22,6 @@ that contains only the X contig.}
 \description{
 Prepare GTF gene annotations for xipher
 }
+\seealso{
+[xipher::default_X_contig_name]
+}
