@@ -17,11 +17,8 @@ prepareGtfClp(
 Note that you can speed ReduceGtf and make it's output smaller by providing a sequence dictionary
 that contains only the X contig.}
 
-\item{X_contig_name}{name of the X contig}
+\item{X_contig_name}{name of the X contig. Default: X}
 }
 \description{
 Prepare GTF gene annotations for xipher
-}
-\seealso{
-[xipher::default_X_contig_name]
 }

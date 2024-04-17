@@ -26,10 +26,9 @@
 #' @param inVcfPath path to input vcf
 #' @param isMouse logical, is the input vcf from a mouse?
 #' @param gnomAdPath path to gnomAD vcf
-#' @param X_contig_name name of the X contig in the reference genome
+#' @param X_contig_name name of the X contig in the reference genome. Default: `r toString(default_X_contig_name)`
 #' @export
 #' @import data.table
-#' @seealso [xipher::default_X_contig_name]
 prepareVcfClp <- function(outVcfPath, inVcfPath, isMouse=FALSE, gnomAdPath=NULL,
                           X_contig_name=default_X_contig_name) {
   vcf <- data.table::fread(inVcfPath )

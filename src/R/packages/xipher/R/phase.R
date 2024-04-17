@@ -23,12 +23,11 @@
 #' phase x chromosome SNPs
 #' @param outPhasePath path to write x SNP phase table
 #' @param preparedDacPath file produced by prepareDacClp()
-#' @param X_contig_name name of the X contig in the reference genome
+#' @param X_contig_name name of the X contig in the reference genome.  Default: `r toString(default_X_contig_name)`
 #' 
 #' TODO: Steve: document the rest of the parameters
 #' @export 
 #' @import data.table
-#' @seealso [xipher::default_X_contig_name]
 phaseClp <- function(outPhasePath,
                      preparedDacPath, 
                      min.cells=2,

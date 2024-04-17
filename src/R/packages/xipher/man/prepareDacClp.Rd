@@ -24,11 +24,8 @@ prepareDacClp(
 
 \item{intronicOnly}{logical, keep only intronic reads?}
 
-\item{X_contig_name}{name of the X contig}
+\item{X_contig_name}{name of the X contig. Default: X}
 }
 \description{
 Join DACs and VCF, annotate with GTF, and prepare for phasing
-}
-\seealso{
-[xipher::default_X_contig_name]
 }

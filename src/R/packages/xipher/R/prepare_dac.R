@@ -26,10 +26,9 @@
 #' @param annotationsPath reduced GTF with columns chr,start,end,gene,annotation
 #' @param vcfPath X-only VCF created with prepareVcfClp(), with columns pos	ref,alt,ps,gt,ad,dp,gq,pl (and if gnomAD:	gnomad.ac,gnomad.an,gnomad.af,gnomad.maf)
 #' @param intronicOnly logical, keep only intronic reads?
-#' @param X_contig_name name of the X contig
+#' @param X_contig_name name of the X contig. Default: `r toString(default_X_contig_name)`
 #' @export 
 #' @import data.table
-#' @seealso [xipher::default_X_contig_name]
 prepareDacClp <- function(outDacPath,
                      dacPaths, 
                      annotationsPath, 
