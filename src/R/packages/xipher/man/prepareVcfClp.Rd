@@ -21,11 +21,8 @@ prepareVcfClp(
 
 \item{gnomAdPath}{path to gnomAD vcf}
 
-\item{X_contig_name}{name of the X contig in the reference genome}
+\item{X_contig_name}{name of the X contig in the reference genome. Default: X}
 }
 \description{
 load donor vcf, prepare for x inference, including gnomAD filtering if provided.
-}
-\seealso{
-[xipher::default_X_contig_name]
 }

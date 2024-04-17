@@ -10,3 +10,4 @@ Description: Tools for Calling X-Inactivation in scRNA Data
 License: MIT + file LICENSE
 RoxygenNote: 7.3.1
 Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
