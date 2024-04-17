@@ -9,6 +9,8 @@
 prepareGtfClp<-function(outAnnotationsPath,
                         inReducedGtfPath,
                         X_contig_name=default_X_contig_name) {
+  # Silence R CMD check warnings for data.table column references
+  . = chr = start = end = gene = annotation = annotationType = gene_name = NULL
   gtf = data.table::fread( inReducedGtfPath )
   
   gtf = unique( gtf[ , .( chr, start, end, gene = gene_name, annotation = annotationType ) ] )

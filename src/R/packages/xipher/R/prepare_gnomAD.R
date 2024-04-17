@@ -4,9 +4,11 @@
 #' @param maf.min minimum allele frequency
 #' @export
 #' @import data.table
-prepareGnomAClp<-function(outGnomADPath,
+prepareGnomAdClp<-function(outGnomADPath,
                           inGnomADVariantsTablePath,
                           maf.min = 0.001) {
+  # Silence R CMD check warnings for data.table column references
+  chrom = type = af = maf = NULL
   gnomad <- data.table::fread(inGnomADVariantsTablePath)
 
   colnames( gnomad ) = tolower( colnames( gnomad ) )
