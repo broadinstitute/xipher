@@ -85,7 +85,7 @@ GatherDigitalAlleleCounts INPUT=your.bam \
 	GQ_THRESHOLD=20
 ```
 - `CELL_BC_FILE` is a file with the cell barcodes for the reaction.
-- `VCF` is TODO: sburger
+- `VCF` is the file produced as part of genotyping step. TODO: sburger, is this right?
 - `INPUT`: the BAM file for the reaction
 - `OUTPUT`: the output file.  It must have extension .dac.txt.gz,
   and the filename before the extension will be used to prefix the cell barcodes to disambiguate across reactions.
