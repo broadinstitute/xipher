@@ -26,3 +26,6 @@ prepareVcfClp(
 \description{
 load donor vcf, prepare for x inference, including gnomAD filtering if provided.
 }
+\seealso{
+[xipher::default_X_contig_name]
+}

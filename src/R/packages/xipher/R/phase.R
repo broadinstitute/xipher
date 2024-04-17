@@ -28,6 +28,7 @@
 #' TODO: Steve: document the rest of the parameters
 #' @export 
 #' @import data.table
+#' @seealso [xipher::default_X_contig_name]
 phaseClp <- function(outPhasePath,
                      preparedDacPath, 
                      min.cells=2,

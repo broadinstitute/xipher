@@ -29,3 +29,6 @@ prepareDacClp(
 \description{
 Join DACs and VCF, annotate with GTF, and prepare for phasing
 }
+\seealso{
+[xipher::default_X_contig_name]
+}

@@ -29,6 +29,7 @@
 #' @param X_contig_name name of the X contig
 #' @export 
 #' @import data.table
+#' @seealso [xipher::default_X_contig_name]
 prepareDacClp <- function(outDacPath,
                      dacPaths, 
                      annotationsPath, 
