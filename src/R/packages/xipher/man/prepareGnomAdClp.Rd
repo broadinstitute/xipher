@@ -2,7 +2,7 @@
 % Please edit documentation in R/prepare_gnomAD.R
 \name{prepareGnomAdClp}
 \alias{prepareGnomAdClp}
-\title{Prepare gnomAD variants table for xipher::prepareVcfClp}
+\title{Prepare gnomAD variants table for xipher::prepareVcfClp.}
 \usage{
 prepareGnomAdClp(outGnomADPath, inGnomADVariantsTablePath, maf.min = 0.001)
 }
@@ -14,5 +14,5 @@ prepareGnomAdClp(outGnomADPath, inGnomADVariantsTablePath, maf.min = 0.001)
 \item{maf.min}{minimum allele frequency}
 }
 \description{
-Prepare gnomAD variants table for xipher::prepareVcfClp
+Prepare gnomAD variants table for xipher::prepareVcfClp.
 }

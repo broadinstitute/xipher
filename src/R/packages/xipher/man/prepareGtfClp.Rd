@@ -2,7 +2,7 @@
 % Please edit documentation in R/prepare_gtf.R
 \name{prepareGtfClp}
 \alias{prepareGtfClp}
-\title{Prepare GTF gene annotations for xipher}
+\title{Prepare GTF gene annotations for xipher.}
 \usage{
 prepareGtfClp(
   outAnnotationsPath,
@@ -20,5 +20,5 @@ that contains only the X contig.}
 \item{X_contig_name}{name of the X contig. Default: X}
 }
 \description{
-Prepare GTF gene annotations for xipher
+Prepare GTF gene annotations for xipher.
 }

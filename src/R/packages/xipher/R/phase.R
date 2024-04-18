@@ -20,7 +20,7 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-#' phase x chromosome SNPs
+#' Phase X chromosome SNPs.
 #' @param outPhasePath path to write x SNP phase table
 #' @param preparedDacPath file produced by prepareDacClp()
 #' @param X_contig_name name of the X contig in the reference genome.  Default: `r toString(default_X_contig_name)`

@@ -2,7 +2,7 @@
 % Please edit documentation in R/prepare_dac.R
 \name{prepareDacClp}
 \alias{prepareDacClp}
-\title{Join DACs and VCF, annotate with GTF, and prepare for phasing}
+\title{Join DACs and VCF, annotate with GTF, and prepare for phasing.}
 \usage{
 prepareDacClp(
   outDacPath,
@@ -27,5 +27,5 @@ prepareDacClp(
 \item{X_contig_name}{name of the X contig. Default: X}
 }
 \description{
-Join DACs and VCF, annotate with GTF, and prepare for phasing
+Join DACs and VCF, annotate with GTF, and prepare for phasing.
 }

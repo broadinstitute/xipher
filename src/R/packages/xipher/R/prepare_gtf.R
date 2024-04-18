@@ -1,4 +1,4 @@
-#' Prepare GTF gene annotations for xipher
+#' Prepare GTF gene annotations for xipher.
 #' @param outAnnotationsPath path to write gene annotations in format used by prepareDacClp()
 #' @param inReducedGtfPath path to reduced GTF file produced by ReduceGtf (see https://github.com/broadinstitute/Drop-seq/).
 #'                         Note that you can speed ReduceGtf and make it's output smaller by providing a sequence dictionary

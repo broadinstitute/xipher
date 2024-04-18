@@ -2,7 +2,7 @@
 % Please edit documentation in R/call_active_x.R
 \name{callActiveXClp}
 \alias{callActiveXClp}
-\title{phase x chromosome SNPs}
+\title{Identify active X chromosome for each cell.}
 \usage{
 callActiveXClp(
   outErrorRatePath,
@@ -27,5 +27,5 @@ callActiveXClp(
 TODO: Steve: document the rest of the parameters}
 }
 \description{
-phase x chromosome SNPs
+Identify active X chromosome for each cell.
 }

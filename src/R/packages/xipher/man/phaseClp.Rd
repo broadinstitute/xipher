@@ -2,7 +2,7 @@
 % Please edit documentation in R/phase.R
 \name{phaseClp}
 \alias{phaseClp}
-\title{phase x chromosome SNPs}
+\title{Phase X chromosome SNPs.}
 \usage{
 phaseClp(
   outPhasePath,
@@ -23,5 +23,5 @@ phaseClp(
 TODO: Steve: document the rest of the parameters}
 }
 \description{
-phase x chromosome SNPs
+Phase X chromosome SNPs.
 }

@@ -20,7 +20,7 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-#' phase x chromosome SNPs
+#' Identify active X chromosome for each cell.
 #' @param outErrorRatePath path to write error rate table
 #' @param outXCallsPath path to write active-X calls
 #' @param preparedDacPath file produced by prepareDacClp()

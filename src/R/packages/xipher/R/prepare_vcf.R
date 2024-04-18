@@ -21,7 +21,7 @@
 # SOFTWARE.
 
 
-#' load donor vcf, prepare for x inference, including gnomAD filtering if provided.
+#' Prepare sample VCF for x inference, including gnomAD filtering if provided.
 #' @param outVcfPath path to write output vcf
 #' @param inVcfPath path to input vcf
 #' @param isMouse logical, is the input vcf from a mouse?
