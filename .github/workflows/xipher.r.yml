@@ -11,6 +11,7 @@ name: xipher R package
 on:
   push:
     branches: [ "main" ]
+    paths: 'src/R/packages/xipher/**'
   pull_request:
     branches: [ "main" ]
     paths: 'src/R/packages/xipher/**'
