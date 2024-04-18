@@ -3,7 +3,7 @@
 \docType{data}
 \name{default_X_contig_name}
 \alias{default_X_contig_name}
-\title{Default name of the chromosome X contig: "X"}
+\title{Default name of the X chromosome: "X"}
 \format{
 An object of class \code{character} of length 1.
 }
@@ -11,6 +11,6 @@ An object of class \code{character} of length 1.
 default_X_contig_name
 }
 \description{
-Default name of the chromosome X contig: "X"
+Default name of the X chromosome: "X"
 }
 \keyword{datasets}

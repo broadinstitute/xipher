@@ -2,7 +2,7 @@
 % Please edit documentation in R/prepare_vcf.R
 \name{prepareVcfClp}
 \alias{prepareVcfClp}
-\title{load donor vcf, prepare for x inference, including gnomAD filtering if provided.}
+\title{Prepare sample VCF for x inference, including gnomAD filtering if provided.}
 \usage{
 prepareVcfClp(
   outVcfPath,
@@ -24,5 +24,5 @@ prepareVcfClp(
 \item{X_contig_name}{name of the X contig in the reference genome. Default: X}
 }
 \description{
-load donor vcf, prepare for x inference, including gnomAD filtering if provided.
+Prepare sample VCF for x inference, including gnomAD filtering if provided.
 }

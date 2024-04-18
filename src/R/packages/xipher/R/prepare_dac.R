@@ -20,7 +20,7 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-#' Join DACs and VCF, annotate with GTF, and prepare for phasing
+#' Join DACs and VCF, annotate with GTF, and prepare for phasing.
 #' @param outDacPath path to write output DAC
 #' @param dacPaths paths to DAC files, one for each reaction.  Filenames are used to disambiguate CBCs
 #' @param annotationsPath reduced GTF with columns chr,start,end,gene,annotation

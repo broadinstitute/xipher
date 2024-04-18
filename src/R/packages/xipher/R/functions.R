@@ -591,6 +591,6 @@ write_table_helper<-function(outPath, x, col.names=TRUE, row.names=FALSE, quote=
 
 # Constants & Defaults ------------------------------------------------------------------------------------------------------
 
-#' Default name of the chromosome X contig: "X"
+#' Default name of the X chromosome: "X"
 #' @export
 default_X_contig_name <- "X"

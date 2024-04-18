@@ -1,4 +1,4 @@
-#' Prepare gnomAD variants table for xipher::prepareVcfClp
+#' Prepare gnomAD variants table for xipher::prepareVcfClp.
 #' @param outGnomADPath path to write gnomAD variants table.  You can then pass this to prepareVcfClp() with gnomAdPath=
 #' @param inGnomADVariantsTablePath path to gnomAD variants table produced by GATK VariantsToTable
 #' @param maf.min minimum allele frequency
