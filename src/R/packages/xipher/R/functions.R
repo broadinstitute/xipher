@@ -75,6 +75,8 @@ get.corresponding.labels = function( labels, from, to ) {
 #' @param files one or more files with extension .dac.txt.gz, produced by GatherDigitalAlleleCounts.  The colnames should be
 #' chr	pos	gene	cell	ref_base	alt_base	rA	rC	rG	rT	rN	A	C	G	T	N	num_umi	umi_mean_purity	read_pval	read_ratio	read_ci_low	read_ci_high	umi_pval	umi_ratio	umi_ci_low	umi_ci_high
 #' @import data.table
+#' @noRd
+#' @keywords internal
 load_and_merge_dacs<-function(files) {
   # Silence R CMD check warnings for data.table column references
   cell = pos = NULL
@@ -536,14 +538,15 @@ call.active.x = function( dac, phased.positions, flip.positions, position.uncert
 
 
 
-# clustering ------------------------------------------------------------------------------------------------------
+# Utilities ------------------------------------------------------------------------------------------------------
 
 #' Test if string ends with given suffix
 #'
 #' @param theString string to be tested
 #' @param theExt suffix to be tested for
 #' @return TRUE if theString ends with theExt
-#' @export
+#' @noRd
+#' @keywords internal
 strEndsWith<-function(theString,theExt) {
   return(substring(theString,1+nchar(theString)-nchar(theExt))==theExt)
 }
@@ -551,7 +554,8 @@ strEndsWith<-function(theString,theExt) {
 #' Creates a file connection with the given open mode.
 #' @param file If ends with ".gz", a gzfile() is created; else a regular file() connection.
 #' @param open mode in which file is opened.  Default: "rb"
-#' @export
+#' @noRd
+#' @keywords internal
 open_conn = function(file, open="") {
   if (strEndsWith(file, ".gz")) {
     # work around bug in gzfile:
@@ -577,11 +581,15 @@ open_conn = function(file, open="") {
 #' @param sep column separator
 #' @param ... additional arguments to write.table
 #' @import utils
+#' @noRd
+#' @keywords internal
 write_table_helper<-function(outPath, x, col.names=TRUE, row.names=FALSE, quote=FALSE, sep="\t", ...) {
   outconn <- open_conn(outPath, "w")
   utils::write.table(x, outconn, col.names=col.names, row.names=row.names, quote=quote, sep=sep)
   close(outconn)
 }
+
+# Constants & Defaults ------------------------------------------------------------------------------------------------------
 
 #' Default name of the chromosome X contig: "X"
 #' @export

@@ -2,13 +2,11 @@
 
 export(callActiveXClp)
 export(default_X_contig_name)
-export(open_conn)
 export(phaseClp)
 export(prepareDacClp)
 export(prepareGnomAdClp)
 export(prepareGtfClp)
 export(prepareVcfClp)
-export(strEndsWith)
 import(binom)
 import(data.table)
 import(stringr)
