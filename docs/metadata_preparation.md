@@ -17,13 +17,13 @@ TODO: sburger explain why to do this
 1. Download the genome chrX gnomAD VCF file.  See [gnomAD downloads](https://gnomad.broadinstitute.org/downloads) for more information.
 2. Run [GATK](https://gatk.broadinstitute.org/hc/en-us) VariantsToTable to convert the VCF to a table.
 ```
-java -jar GenomeAnalysisTK.jar /
--R your.fasta /
--T VariantsToTable /
--V gnomad.genomes.v?.sites.chrX.vcf.bgz /
--F CHROM -F POS -F REF -F ALT -F TYPE /
--F AC -F AN -F AF /
--o gnomad_chrX_variants_table.txt
+java -jar GenomeAnalysisTK.jar \
+VariantsToTable \
+-R your.fasta \
+-V gnomad.genomes.v?.sites.chrX.vcf.bgz \
+-F CHROM -F POS -F REF -F ALT -F TYPE \
+-F AC -F AN -F AF \
+-O gnomad_chrX_variants_table.txt
 ```
 - `your.fasta` is the reference genome fasta file you used to align your reads.
 - `gnomad.genomes.v?.sites.chrX.vcf.bgz` is the gnomAD VCF file you downloaded.
