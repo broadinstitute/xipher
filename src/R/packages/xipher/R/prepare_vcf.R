@@ -72,7 +72,8 @@ prepareVcf<-function(vcf, gnomad.vcf = NULL, isMouse=FALSE,
   # format gnomad vcf
   if ( !is.null(gnomad.vcf) ) {
     
-    gnomad.vcf[ , chrom := gsub( "chr", "", chrom ) ]
+    #gnomad.vcf[ , chrom := gsub( "chr", "", chrom ) ]
+    colnames( gnomad.vcf ) = tolower( colnames( gnomad.vcf ) )
     gnomad.vcf = gnomad.vcf[ chrom == X_contig_name & type == "SNP" ]
     gnomad.vcf[ , c( "chrom", "type" ) := NULL ]
     colnames( gnomad.vcf )[ -1 ] = paste0( "gnomad.", colnames( gnomad.vcf )[ -1 ] )
