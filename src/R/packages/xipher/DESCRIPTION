@@ -1,7 +1,7 @@
 Package: xipher
 Type: Package
 Title: Tools for Calling X-Inactivation in scRNA Data
-Version: 0.1.1
+Version: 0.1.2
 Date: 2024-03-28
 Imports: data.table,binom,stringr
 Author: Steven Burger

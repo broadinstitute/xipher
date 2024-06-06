@@ -46,7 +46,7 @@ prepareVcf<-function(vcf, gnomad.vcf = NULL, isMouse=FALSE,
   # Silence R CMD check warnings for data.table column references
   CHROM = TYPE = gt = ref = alt = het = chrom = type = NULL
 
-  vcf[ , CHROM := gsub( "chr", "", CHROM ) ]
+  # vcf[ , CHROM := gsub( "chr", "", CHROM ) ] # Don't do this, just leave natural contig names
   vcf = vcf[ CHROM == X_contig_name & TYPE == "SNP" ]
   vcf[ , c( "CHROM", "TYPE" ) := NULL ] 
   colnames( vcf ) = do.call( "rbind", strsplit( colnames( vcf ), ".", fixed = T ) )[ , 2 ]
