@@ -41,8 +41,7 @@ prepareDacClp <- function(outDacPath,
   dac <- load_and_merge_dacs(dacPaths)
   vcf <- data.table::fread( vcfPath )
   gtf <- data.table::fread( annotationsPath )
-  dac[ , chr := gsub( "chr", "", chr ) ]
-  # TODO: Steve: What does this line do?
+  #dac[ , chr := gsub( "chr", "", chr ) ]
   dac = dac[ chr == X_contig_name ]
   dac = merge( dac, vcf, by = "pos" )
   unique.pos = unique( dac[ , .( pos, gene ) ] )
