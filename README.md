@@ -1,3 +1,5 @@
+# This repository was archived on 17 November 2026 and will be deleted soon.
+
 # xipher
 Tools for calling X-inactivation in scRNA-seq data
 TODO: sburger
